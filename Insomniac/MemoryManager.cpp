@@ -36,7 +36,7 @@ namespace MemoryManager
 			if (MM_pool[i] == -2) {
 				int j = i;
 				bool sizeAvailable = true;
-				for (int k = 0; k < aSize - 1; k++) {
+				for (int k = 0; k < aSize - 1 + 8; k++) {
 					if (MM_pool[j] != -2) {
 						sizeAvailable = false;
 						break;
@@ -49,7 +49,7 @@ namespace MemoryManager
 					int j = i + 4 + aSize;
 					setGuardBand(j);
 				
-					return reinterpret_cast<void *>(&MM_pool[i + 3]);
+					return reinterpret_cast<void *>(&MM_pool[i + 4]);
 				}
 			}
 		}
@@ -73,8 +73,8 @@ namespace MemoryManager
 		// TODO: IMPLEMENT ME
 		for (int i = 0; i < sizeof(MM_pool); i++) {
 			if (MM_pool[i] == '0' && MM_pool[i + 1] == 'x' && MM_pool[i + 2] == 'D' && MM_pool[i + 3] == 'B') {
-				i += 3;
-				i += getTheSizeOfTheBlock(i) + 3;
+				i += 4;
+				i += getTheSizeOfTheBlock(i) + 4;
 			}
 			else
 			size++;

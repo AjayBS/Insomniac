@@ -12,6 +12,7 @@ namespace MemoryManager
 	// IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
 	void setGuardBand(int index);
 	int getTheSizeOfTheBlock(int index);
+	void clearGuardBandAndValues(int index);
 
 	const int MM_POOL_SIZE = 65536;
 	char MM_pool[MM_POOL_SIZE];
@@ -60,6 +61,13 @@ namespace MemoryManager
 	void deallocate(void* aPointer)
 	{
 		// TODO: IMPLEMENT ME
+		for (int i = 0; i < sizeof(MM_pool);i++) {
+			if (aPointer == &MM_pool[i]) {
+				printf("Found item");
+				clearGuardBandAndValues(i);
+				break;
+			}
+		}
 	}
 
 	//---
@@ -74,7 +82,7 @@ namespace MemoryManager
 		for (int i = 0; i < sizeof(MM_pool); i++) {
 			if (MM_pool[i] == '0' && MM_pool[i + 1] == 'x' && MM_pool[i + 2] == 'D' && MM_pool[i + 3] == 'B') {
 				i += 4;
-				i += getTheSizeOfTheBlock(i) + 4;
+				i += getTheSizeOfTheBlock(i) + 3;
 			}
 			else
 			size++;
@@ -103,6 +111,25 @@ namespace MemoryManager
 		MM_pool[index++] = 'x';
 		MM_pool[index++] = 'D';
 		MM_pool[index++] = 'B';
+	}
+
+	void clearGuardBandAndValues(int index) {
+		index = index - 4;
+		MM_pool[index++] = -2;
+		MM_pool[index++] = -2;
+		MM_pool[index++] = -2;
+		MM_pool[index++] = -2;
+
+		for (int i = index; i < sizeof(MM_pool); i++) {
+			if (MM_pool[i] == '0' && MM_pool[i + 1] == 'x' && MM_pool[i + 2] == 'D' && MM_pool[i + 3] == 'B') {
+				MM_pool[i++] = -2;
+				MM_pool[i++] = -2;
+				MM_pool[i++] = -2;
+				MM_pool[i++] = -2;
+				break;
+			}
+			MM_pool[i] = -2;
+		}
 	}
 
 	int getTheSizeOfTheBlock(int index) {

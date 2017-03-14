@@ -12,7 +12,7 @@ int main(void)
   initializeMemoryManager();
 
   long* int_pointer;
-//  char* string_pointer;
+// char* string_pointer;
   long* int_pointer1;
 
   std::cout << "Free memory = " << freeRemaining() << std::endl;
@@ -35,6 +35,12 @@ int main(void)
  std::cout << "Free memory = " << freeRemaining() << std::endl;
  std::cout << "Largest free = " << largestFree() << std::endl;
  std::cout << "Smallest free = " << smallestFree() << std::endl;
+ 
+ long *int_pointer2 = (long *)allocate(sizeof(long));
+ std::cout << "Free memory = " << freeRemaining() << std::endl;
+ std::cout << "Largest free = " << largestFree() << std::endl;
+ std::cout << "Smallest free = " << smallestFree() << std::endl;
+ //string_pointer = (char*)allocate(255);
  /*deallocate(string_pointer);*/
  system("pause");
 }

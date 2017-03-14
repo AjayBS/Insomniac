@@ -54,6 +54,8 @@ namespace MemoryManager
 				}
 			}
 		}
+
+		onOutOfMemory();
 		return ((void*)0);
 	}
 
@@ -61,12 +63,18 @@ namespace MemoryManager
 	void deallocate(void* aPointer)
 	{
 		// TODO: IMPLEMENT ME
+		bool itemFound = false;
 		for (int i = 0; i < sizeof(MM_pool);i++) {
-			if (aPointer == &MM_pool[i]) {
+			if (aPointer == &MM_pool[i] && MM_pool[i] != -2) {
 				printf("Found item");
 				clearGuardBandAndValues(i);
+				itemFound = true;
 				break;
 			}
+		}
+
+		if (!itemFound) {
+			onIllegalOperation("Memory has already been freed for this address");
 		}
 	}
 

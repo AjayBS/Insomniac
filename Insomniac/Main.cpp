@@ -12,7 +12,7 @@ int main(void)
   initializeMemoryManager();
 
   long* int_pointer;
-  char* string_pointer;
+//  char* string_pointer;
   long* int_pointer1;
 
   std::cout << "Free memory = " << freeRemaining() << std::endl;
@@ -20,20 +20,21 @@ int main(void)
   int_pointer = (long *) allocate(sizeof(long));
   //string_pointer = (char*) allocate(255);
   *int_pointer = 0xDEADBEEF;
-  std::cout << "Free memory = " << freeRemaining() << std::endl;
- string_pointer = (char*)allocate(255);
+ //string_pointer = (char*)allocate(255);
  
  std::cout << "Free memory = " << freeRemaining() << std::endl;
- std::strcpy(string_pointer,"It was the best of times, it was the worst of times");
+// std::strcpy(string_pointer,"It was the best of times, it was the worst of times");
 
+ //deallocate(string_pointer);
+ int_pointer1 = (long *)allocate(sizeof(long));
  std::cout << "Free memory = " << freeRemaining() << std::endl;
- 
- 
- std::cout << "Free memory = " << freeRemaining() << std::endl;
+ std::cout << "Largest free = " << largestFree() << std::endl;
+ std::cout << "Smallest free = " << smallestFree() << std::endl;
+ *int_pointer1 = 2564;
  deallocate(int_pointer);
  std::cout << "Free memory = " << freeRemaining() << std::endl;
- int_pointer1 = (long *)allocate(sizeof(long));
- *int_pointer1 = 2564;
+ std::cout << "Largest free = " << largestFree() << std::endl;
+ std::cout << "Smallest free = " << smallestFree() << std::endl;
  /*deallocate(string_pointer);*/
  system("pause");
 }

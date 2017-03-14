@@ -14,7 +14,7 @@ namespace MemoryManager
 	int getTheSizeOfTheBlock(int index);
 	void clearGuardBandAndValues(int index);
 
-	const int MM_POOL_SIZE = 65536;
+	const int MM_POOL_SIZE = 50;
 	char MM_pool[MM_POOL_SIZE];
 
 	// Initialize set up any data needed to manage the memory pool
@@ -94,16 +94,49 @@ namespace MemoryManager
 	int largestFree(void)
 	{
 		// TODO: IMPLEMENT ME
+		int size = 0;
+		int largest = 0;
+		// TODO: IMPLEMENT ME
+		for (int i = 0; i < sizeof(MM_pool); i++) {
+			if (MM_pool[i] == '0' && MM_pool[i + 1] == 'x' && MM_pool[i + 2] == 'D' && MM_pool[i + 3] == 'B') {
+				i += 4;
+				i += getTheSizeOfTheBlock(i) + 3;
+				size = 0;
+			}
+			else
+				size++;
 
-		return 0;
+			if (size > largest) {
+				largest = size;
+			}
+		}
+		return largest;
 	}
 
 	// will scan the memory pool and return the smallest free space remaining
 	int smallestFree(void)
 	{
 		// TODO: IMPLEMENT ME
+		int size = 0;
+		int smallest = MM_POOL_SIZE;
+		bool firstPass = true;
+		// TODO: IMPLEMENT ME
+		for (int i = 0; i < sizeof(MM_pool); i++) {
+			if (MM_pool[i] == '0' && MM_pool[i + 1] == 'x' && MM_pool[i + 2] == 'D' && MM_pool[i + 3] == 'B') {
+				i += 4;
+				i += getTheSizeOfTheBlock(i) + 3;
+				if (size < smallest && size!=0)
+					smallest = size;
 
-		return 0;
+				size = 0;				
+			}
+			else
+				size++;		
+		}
+		if (size != MM_POOL_SIZE && smallest == MM_POOL_SIZE)
+			smallest = size;
+
+		return smallest;
 	}
 
 	void setGuardBand(int index) {
